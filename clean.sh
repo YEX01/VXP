@@ -13,7 +13,7 @@ echo "╚═══════════════════════�
 echo -e "${NC}"
 
 echo -e "${YELLOW}Changing to VX7 directory...${NC}"
-if ! cd ~/VX7 2>/dev/null; then
+if ! cd ~/VXP 2>/dev/null; then
     echo -e "${RED}Error: Failed to change to ~/VX7 directory. Does it exist?${NC}"
     exit 1
 fi
