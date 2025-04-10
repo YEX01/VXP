@@ -1,0 +1,54 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+echo -e "${CYAN}"
+echo "╔══════════════════════════════════════════════╗"
+echo "║               Opus Application               ║"
+echo "║                 Starting...                  ║"
+echo "╚══════════════════════════════════════════════╝"
+echo -e "${NC}"
+
+echo -e "${YELLOW}Checking Python 3 installation...${NC}"
+if ! command -v python3 &> /dev/null; then
+    echo -e "${RED}Error: Python 3 is not installed or not in PATH${NC}"
+    exit 1
+fi
+echo -e "${GREEN}Python 3 found: $(python3 --version 2>&1)${NC}"
+
+echo -e "\n${YELLOW}Verifying Opus module...${NC}"
+if ! python3 -c "import Opus" 2>/dev/null; then
+    echo -e "${RED}Error: Opus module not found${NC}"
+    echo -e "${BLUE}Try installing it with: pip install Opus${NC}"
+    exit 1
+fi
+echo -e "${GREEN}Opus module is available${NC}"
+
+echo -e "\n${YELLOW}Launching Opus application...${NC}"
+echo -e "${BLUE}══════════════════════════════════════════════${NC}"
+
+start_time=$(date +%s)
+
+if ! python3 -m Opus 2>&1; then
+    end_time=$(date +%s)
+    runtime=$((end_time - start_time))
+    echo -e "${BLUE}══════════════════════════════════════════════${NC}"
+    echo -e "${RED}✗ Application crashed after ${runtime} seconds${NC}"
+    exit 1
+fi
+
+end_time=$(date +%s)
+runtime=$((end_time - start_time))
+
+echo -e "${BLUE}══════════════════════════════════════════════${NC}"
+echo -e "${GREEN}✓ Application ran successfully for ${runtime} seconds${NC}"
+echo -e "${CYAN}"
+echo "╔══════════════════════════════════════════════╗"
+echo "║            Opus Session Complete             ║"
+echo "╚══════════════════════════════════════════════╝"
+echo -e "${NC}"
